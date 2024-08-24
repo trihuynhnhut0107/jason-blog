@@ -1,0 +1,74 @@
+<template>
+  <div class="h-screen max-w-screen bg-white font-display">
+    <div class="header w-full bg-black text-white">
+      <div
+        class="container mx-auto w-2/3 flex flex-row justify-between py-4 px-4">
+        <NuxtLink to="/">Logo</NuxtLink>
+        <div v-if="userCookie">
+          <button class="hover:text-red-text duration-100" @click="logout">
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-row w-full container mx-auto divide-x-2">
+      <div class="w-1/4 h-full">
+        <div v-for="item in leftSectionItemCount">
+          <button class="items-center px-4 py-2 duration-100">
+            <img
+              src="\public\image\steal-10th_3D-600x679.jpg"
+              alt="Book image" />
+            Book number: {{ item }}
+          </button>
+        </div>
+      </div>
+      <div class="w-full h-full p-6"><slot /></div>
+      <div class="w-1/4 p-6 space-y-4">
+        <div class="flex flex-col">
+          <input
+            type="text"
+            v-model="search"
+            placeholder="Search title"
+            class="border-b-2 h-12 p-2" />
+          <button
+            class="border-2 px-4 py-2 hover:bg-black hover:text-white rounded-md my-2"
+            @click="navigateToSearch">
+            Search
+          </button>
+        </div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const leftSectionItemCount = ref(5);
+const router = useRouter();
+const route = useRoute();
+
+const userCookie = useCookie("user");
+
+const search = ref("");
+
+function navigateToSearch() {
+  navigateTo({
+    path: "/search",
+    query: {
+      search: search.value,
+    },
+  });
+}
+
+function logout() {
+  userCookie.value = null;
+  navigateTo("/login");
+}
+</script>
+
+<style>
+::selection {
+  color: white;
+  background: black;
+}
+</style>
