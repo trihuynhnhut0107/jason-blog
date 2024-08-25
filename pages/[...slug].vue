@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="space-y-6">
-      <h1>{{ postData[0].title.rendered }}</h1>
+      <h1 class="font-oswald">{{ postData[0].title.rendered }}</h1>
+      <h5>
+        {{ new Date(postData[0].date).toLocaleDateString("en-US", options) }}
+      </h5>
       <div v-html="postData[0].content.rendered"></div>
     </div>
   </div>
@@ -23,6 +26,13 @@ if (route.params.slug) {
   slug.value = "home";
 }
 
+const options = ref({
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+
 const {
   data: postData,
   pending,
@@ -36,7 +46,7 @@ console.log(postData.value);
 
 <style scoped>
 :deep() {
-  @apply space-y-6;
+  @apply space-y-6 font-display;
 }
 :deep(h1) {
   @apply text-4xl;

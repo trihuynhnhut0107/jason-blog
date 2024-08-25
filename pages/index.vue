@@ -11,7 +11,14 @@
               : 'opacity-50 pointer-events-none cursor-not-allowed'
           } hover:text-red-text`"
           @click="navigateToPost(item)">
-          <h1 class="text-4xl">{{ item.post.post_title }}</h1>
+          <h1 class="text-4xl text-start font-oswald">
+            {{ item.post.post_title }}
+          </h1>
+          <h5 class="text-start">
+            {{
+              new Date(item.post.post_date).toLocaleDateString("en-US", options)
+            }}
+          </h5>
           <div v-html="item.post.post_content" class="line-clamp-3"></div>
         </button>
         <div
@@ -43,6 +50,12 @@ const route = useRoute();
 const router = useRouter();
 
 const userCookie = useCookie("user");
+
+const options = ref({
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
 const restrictedPostInfo = ref([]);
 
@@ -95,7 +108,7 @@ function navigateToPost(post: object) {
 
 <style scoped>
 :deep() {
-  @apply space-y-6;
+  @apply space-y-6 text-start font-display;
 }
 :deep(.line-clamp-3 img) {
   @apply block ml-auto mr-auto w-96 h-96;

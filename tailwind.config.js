@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ["Roboto", "sans-serif"],
+        oswald: ["Oswald", "sans-serif"],
       },
       colors: {
         "red-text": "#cf2e2e",

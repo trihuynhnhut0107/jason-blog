@@ -67,9 +67,13 @@ function logout() {
 }
 </script>
 
-<style>
+<style scoped>
 ::selection {
   color: white;
   background: black;
+}
+
+.h1 {
+  @apply font-oswald text-4xl;
 }
 </style>
