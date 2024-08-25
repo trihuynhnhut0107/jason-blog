@@ -29,7 +29,8 @@
             type="text"
             v-model="search"
             placeholder="Search title"
-            class="border-b-2 h-12 p-2" />
+            class="border-b-2 h-12 p-2"
+            @keyup.enter="navigateToSearch" />
           <button
             class="border-2 px-4 py-2 hover:bg-black hover:text-white rounded-md my-2"
             @click="navigateToSearch">
