@@ -1,19 +1,20 @@
 <template>
   <div>
+    <PostUnlockConfirmation />
     <div v-if="!loading" class="flex flex-col">
       <div
         v-for="item in restrictedPostInfo.posts"
         class="flex flex-col space-y-4">
+        <h1 class="text-4xl text-start font-oswald">
+          {{ item.post.post_title }}
+        </h1>
         <button
           :class="`${
             item.has_access
               ? ''
-              : 'opacity-50 pointer-events-none cursor-not-allowed'
+              : 'blur-md pointer-events-none cursor-not-allowed'
           } hover:text-red-text`"
           @click="navigateToPost(item)">
-          <h1 class="text-4xl text-start font-oswald">
-            {{ item.post.post_title }}
-          </h1>
           <h5 class="text-start">
             {{
               new Date(item.post.post_date).toLocaleDateString("en-US", options)
@@ -104,11 +105,17 @@ watch(currentPageNumber, (newPageNumber) => {
 function navigateToPost(post: object) {
   navigateTo(`/${post.post.post_name}`);
 }
+
+const pucharsingPopupActive = ref(false);
+
+function purchasingPost() {
+  pucharsingPopupActive.value = true;
+}
 </script>
 
 <style scoped>
 :deep() {
-  @apply space-y-6 text-start font-display;
+  @apply space-y-6 text-start font-roboto;
 }
 :deep(.line-clamp-3 img) {
   @apply block ml-auto mr-auto w-96 h-96;

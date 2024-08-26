@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
         oswald: ["Oswald", "sans-serif"],
       },
       colors: {

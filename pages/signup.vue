@@ -27,6 +27,12 @@
         Submit
       </button>
     </div>
+    <div class="flex flex-row space-x-1">
+      <p>Already have an account?</p>
+      <NuxtLink to="/login" class="underline hover:text-red-text"
+        >Log in?</NuxtLink
+      >
+    </div>
   </div>
 </template>
 
@@ -42,19 +48,29 @@ const signupData = ref({
 });
 
 async function submit() {
-  const { data } = await useAPI("custom/v1/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({
-      email: signupData.value.email,
-      username: signupData.value.username,
-      password: signupData.value.password,
-    }),
-  });
-  if (data.value.status === 200) {
+  const { data: signUpInfo, error: signUpError } = await useAPI(
+    "custom/v1/signup",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email: signupData.value.email,
+        username: signupData.value.username,
+        password: signupData.value.password,
+      }),
+    }
+  );
+  if (signUpError.value !== null) {
+    signupData.value = {
+      email: "",
+      username: "",
+      password: "",
+    };
+    throw alert(signUpError.value?.data.message);
+  } else if (signUpInfo) {
     useLogin({
       username: signupData.value.username,
       password: signupData.value.password,

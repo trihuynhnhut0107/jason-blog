@@ -46,7 +46,7 @@ console.log(postData.value);
 
 <style scoped>
 :deep() {
-  @apply space-y-6 font-display;
+  @apply space-y-6 font-roboto;
 }
 :deep(h1) {
   @apply text-4xl;

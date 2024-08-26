@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen max-w-screen bg-white font-display">
+  <div class="h-screen max-w-screen bg-white">
     <div class="header w-full bg-black text-white">
       <div
         class="container mx-auto w-2/3 flex flex-row justify-between py-4 px-4">
@@ -71,9 +71,5 @@ function logout() {
 ::selection {
   color: white;
   background: black;
-}
-
-.h1 {
-  @apply font-oswald text-4xl;
 }
 </style>
