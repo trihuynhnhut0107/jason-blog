@@ -8,12 +8,19 @@ export default defineNuxtConfig({
       baseURL: process.env.BASE_URL || "http://localhost/test-wp/wp-json/",
     },
   },
-
   css: [
     "~/assets/css/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
-
+  modules: ["@nuxtjs/google-fonts"],
+  googleFonts: {
+    families: {
+      // Specify the font families you want to import
+      Roboto: [400, 700],
+      Oswald: [500],
+    },
+    display: "swap",
+  },
   postcss: {
     plugins: {
       tailwindcss: {},

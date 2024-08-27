@@ -1,6 +1,7 @@
 <template>
   <div>
-    <PostUnlockConfirmation />
+    <PostUnlockConfirmation v-model="pucharsingPopupActive" />
+
     <div v-if="!loading" class="flex flex-col">
       <div
         v-for="item in restrictedPostInfo.posts"
@@ -26,6 +27,7 @@
           v-if="!item.has_access"
           class="flex flex-row items-center justify-center">
           <button
+            @click="purchasingPost"
             class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75">
             Unlock?
           </button>
@@ -115,7 +117,10 @@ function purchasingPost() {
 
 <style scoped>
 :deep() {
-  @apply space-y-6 text-start font-roboto;
+  @apply space-y-6 text-start;
+}
+:deep(.line-clamp-3 p) {
+  @apply font-roboto;
 }
 :deep(.line-clamp-3 img) {
   @apply block ml-auto mr-auto w-96 h-96;
