@@ -82,7 +82,7 @@ async function fetchPostByPage(pageNumber: number) {
         page: pageNumber,
       },
     });
-    totalPages.value = data.value.total_pages;
+    totalPages.value = data.value?.total_pages;
     restrictedPostInfo.value = data.value;
     console.log(restrictedPostInfo.value);
   } catch (error) {
