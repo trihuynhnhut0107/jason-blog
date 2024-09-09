@@ -1,14 +1,27 @@
 <template>
   <div>
-    <PostUnlockConfirmation v-model="pucharsingPopupActive" />
+    <PostUnlockConfirmation
+      v-model:popupActive="pucharsingPopupActive"
+      v-model:purchasingPost="confirmPurchasingPost" />
 
     <div v-if="!loading" class="flex flex-col">
       <div
         v-for="item in restrictedPostInfo.posts"
         class="flex flex-col space-y-4">
-        <h1 class="text-4xl text-start font-oswald">
-          {{ item.post.post_title }}
-        </h1>
+        <button
+          @click="navigateToPost(item)"
+          :class="`${
+            item.has_access ? '' : 'pointer-events-none cursor-not-allowed'
+          } hover:text-red-text`">
+          <h1 class="text-4xl text-start font-oswald">
+            {{ item.post.post_title }}
+          </h1>
+        </button>
+        <h5 class="text-start">
+          {{
+            new Date(item.post.post_date).toLocaleDateString("en-US", options)
+          }}
+        </h5>
         <button
           :class="`${
             item.has_access
@@ -16,11 +29,6 @@
               : 'blur-md pointer-events-none cursor-not-allowed'
           } hover:text-red-text`"
           @click="navigateToPost(item)">
-          <h5 class="text-start">
-            {{
-              new Date(item.post.post_date).toLocaleDateString("en-US", options)
-            }}
-          </h5>
           <div v-html="item.post.post_content" class="line-clamp-3"></div>
         </button>
         <div
@@ -33,16 +41,15 @@
           </button>
         </div>
       </div>
-      <div class="flex flex-row items-center justify-center">
-        <div class="flex flex-row items-center justify-center">
-          Page:
-          <input
-            type="text"
-            v-model="currentPageNumber"
-            class="text-center w-12 border-2 m-2 rounded-md" />
-          /
-          {{ totalPages }}
-        </div>
+
+      <div class="flex flex-row items-center justify-center space-x-1">
+        Page:
+        <input
+          type="text"
+          v-model="currentPageNumber"
+          class="flex text-center w-12 border-2 p-1 m-1 rounded-md" />
+        /
+        {{ totalPages }}
       </div>
     </div>
   </div>
@@ -53,6 +60,9 @@ const route = useRoute();
 const router = useRouter();
 
 const userCookie = useCookie("user");
+if (!userCookie.value) {
+  navigateTo("/login");
+}
 
 const options = ref({
   year: "numeric",
@@ -63,10 +73,6 @@ const options = ref({
 const restrictedPostInfo = ref([]);
 
 const loading = ref(false);
-
-if (!userCookie.value) {
-  navigateTo("/login");
-}
 
 const currentPageNumber = ref(1);
 
@@ -109,6 +115,7 @@ function navigateToPost(post: object) {
 }
 
 const pucharsingPopupActive = ref(false);
+const confirmPurchasingPost = ref(false);
 
 function purchasingPost() {
   pucharsingPopupActive.value = true;

@@ -2,12 +2,21 @@
   <div class="h-screen max-w-screen bg-white">
     <div class="header w-full bg-black text-white">
       <div
-        class="container mx-auto w-2/3 flex flex-row justify-between py-4 px-4">
-        <NuxtLink to="/">Logo</NuxtLink>
-        <div v-if="userCookie">
-          <button class="hover:text-red-text duration-100" @click="logout">
-            Log out
-          </button>
+        class="container mx-auto w-2/3 flex flex-row justify-between py-4 px-4 items-center">
+        <NuxtLink to="/"
+          ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
+        >
+        <div class="flex flex-row space-x-4">
+          <div>
+            <NuxtLink to="/store" class="hover:text-red-text duration-100"
+              >Store</NuxtLink
+            >
+          </div>
+          <div v-if="userCookie">
+            <button class="hover:text-red-text duration-100" @click="logout">
+              Log out
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +33,7 @@
       </div>
       <div class="w-full h-full p-6"><slot /></div>
       <div class="w-1/4 p-6 space-y-4">
-        <div class="flex flex-col">
+        <div class="flex flex-col sticky top-2">
           <input
             type="text"
             v-model="search"
@@ -62,8 +71,8 @@ function navigateToSearch() {
 }
 
 function logout() {
-  userCookie.value = null;
-  navigateTo("/login");
+  useLogout();
+  refreshNuxtData();
 }
 </script>
 

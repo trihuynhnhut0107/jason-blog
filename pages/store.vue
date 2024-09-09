@@ -1,28 +1,46 @@
 <template>
   <div class="text-4xl font-oswald">Store</div>
-  <div class="grid grid-cols-3 grid-flow-row gap-5">
-    <div v-for="item in itemSellingCount" class="flex flex-col p-2">
+  <div class="flex flex-row justify-center items-center h-full w-full">
+    <div class="flex flex-col p-2 h-full w-full">
       <button
         @mouseleave="itemQuantity = 1"
         class="relative w-full h-full border rounded-md flex flex-col items-center justify-center">
-        <img src="public\image\steal-10th_3D-600x679.jpg" alt="Item pic" />
+        <h1
+          class="flex justify-center items-center font-logo text-5xl h-24 w-24 pointer-events-none cursor-not-allowed">
+          Token
+        </h1>
 
         <div
-          class="absolute inset-0 bg-gray-800 bg-opacity-75 space-x-2 flex flex-row items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-          <button
-            class="border h-fit w-fit bg-white p-2"
-            @click="itemQuantity--">
-            -
-          </button>
-          <input
-            type="text"
-            class="h-auto w-auto text-center"
-            v-model="itemQuantity" />
-          <button class="border bg-white p-2" @click="itemQuantity++">+</button>
+          class="absolute inset-0 bg-black bg-opacity-75 space-x-1 flex flex-col items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+          <div class="flex flex-row font-oswald">
+            <button
+              class="border bg-white px-1 hover:bg-red-text hover:text-white"
+              @click="itemQuantity--">
+              <p>-</p>
+            </button>
+            <input
+              type="text"
+              class="text-center mx-auto focus:outline-none"
+              v-model="itemQuantity" />
+            <button
+              class="border bg-white px-1 hover:bg-red-text hover:text-white"
+              @click="itemQuantity++">
+              <p>+</p>
+            </button>
+          </div>
+          <div>
+            <button
+              @click="purchaseItem"
+              class="bg-white shadow-md rounded-md m-2 px-4 py-2 hover:bg-red-text hover:text-white duration-75 font-oswald">
+              Purchase
+            </button>
+          </div>
         </div>
       </button>
-      <p>Item number: {{ item }}</p>
-      <p>Price: $654</p>
+      <div class="flex flex-col items-center justify-center">
+        <p>Token</p>
+        <p>Price: {{ tokenPrice }} VNĐ</p>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +52,14 @@ definePageMeta({
 
 const itemSellingCount = ref(5);
 const itemQuantity = ref(1);
+
+const tokenPrice = ref(1000);
+
+function purchaseItem() {
+  const tokenQuantityCookie = useCookie("tokenQuantity");
+  tokenQuantityCookie.value = String(itemQuantity.value);
+  navigateTo("/payment");
+}
 </script>
 
 <style></style>

@@ -13,6 +13,7 @@ module.exports = {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
         oswald: ["Oswald", "sans-serif"],
+        logo: ["Kaushan Script", "sans-serif"],
       },
       colors: {
         "red-text": "#cf2e2e",

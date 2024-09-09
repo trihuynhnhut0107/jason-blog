@@ -21,7 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-const popupActive = defineModel();
+const popupActive = defineModel("popupActive");
+const purchasingPost = defineModel("purchasingPost");
 
 function cancelPurcharsing() {
   popupActive.value = false;

@@ -1,16 +1,16 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   if (to.path === "/login" || to.path === "/signup") {
     return;
   }
+
   const userCookie = useCookie("user");
-
-  if (!userCookie.value) {
-    return navigateTo("/login");
+  if (!userCookie) {
+    navigateTo("/login");
   }
-
-  // const { data: verifyInfo, error: verifyError } = useAPI(
-  //   "custom/v1/secure-data"
-  // );
-  // console.log(verifyInfo.value);
-  // console.log(verifyError.value);
+  const { data, error } = await useAPI("custom/v1/secure-data", {
+    credentials: "include",
+  });
+  if (error.value !== null) {
+    useLogout();
+  }
 });

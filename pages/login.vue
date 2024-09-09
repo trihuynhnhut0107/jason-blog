@@ -48,26 +48,6 @@ const loginData = ref({
   password: "",
 });
 
-// async function login() {
-//   const { data } = await useAPI("custom/v1/login", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     credentials: "include",
-//     body: JSON.stringify({
-//       username: loginData.value.username,
-//       password: loginData.value.password,
-//     }),
-//   });
-//   console.log(data.value);
-
-//   if (data.value.status === "success") {
-//     userCookie.value = data.value.cookie;
-//     navigateTo("/");
-//   }
-// }
-
 async function login() {
   useLogin(loginData.value);
 }

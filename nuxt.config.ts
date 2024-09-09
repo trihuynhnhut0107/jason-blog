@@ -18,6 +18,7 @@ export default defineNuxtConfig({
       // Specify the font families you want to import
       Roboto: [400, 700],
       Oswald: [500],
+      "Kaushan Script": [400],
     },
     display: "swap",
   },
