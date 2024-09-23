@@ -2,7 +2,8 @@
   <div>
     <PostUnlockConfirmation
       v-model:popupActive="pucharsingPopupActive"
-      v-model:purchasingPost="confirmPurchasingPost" />
+      v-model:purchasingPost="confirmPurchasingPost"
+      v-model:currentPost="currentPost" />
 
     <div v-if="!loading" class="flex flex-col">
       <div
@@ -35,7 +36,7 @@
           v-if="!item.has_access"
           class="flex flex-row items-center justify-center">
           <button
-            @click="purchasingPost"
+            @click="showPurchasingDialog(item.post.ID)"
             class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75">
             Unlock?
           </button>
@@ -116,8 +117,10 @@ function navigateToPost(post: object) {
 
 const pucharsingPopupActive = ref(false);
 const confirmPurchasingPost = ref(false);
+const currentPost = ref(-1);
 
-function purchasingPost() {
+function showPurchasingDialog(post_productID: number) {
+  currentPost.value = post_productID;
   pucharsingPopupActive.value = true;
 }
 </script>

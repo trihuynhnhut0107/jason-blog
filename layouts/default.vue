@@ -12,7 +12,7 @@
               >Store</NuxtLink
             >
           </div>
-          <div v-if="userCookie">
+          <div>
             <button class="hover:text-red-text duration-100" @click="logout">
               Log out
             </button>
@@ -57,9 +57,13 @@ const leftSectionItemCount = ref(5);
 const router = useRouter();
 const route = useRoute();
 
-const userCookie = useCookie("user");
-
 const search = ref("");
+
+const { data: tokenInfo } = await useAPI("custom/v1/get-token", {
+  credentials: "include",
+});
+
+console.log(tokenInfo.value);
 
 function navigateToSearch() {
   navigateTo({

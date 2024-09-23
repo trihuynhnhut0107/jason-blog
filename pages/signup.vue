@@ -63,6 +63,7 @@ async function submit() {
       }),
     }
   );
+  console.log(signUpInfo.value);
   if (signUpError.value !== null) {
     signupData.value = {
       email: "",
@@ -71,7 +72,7 @@ async function submit() {
     };
     throw alert(signUpError.value?.data.message);
   } else if (signUpInfo) {
-    useLogin({
+    await useLogin({
       username: signupData.value.username,
       password: signupData.value.password,
     });

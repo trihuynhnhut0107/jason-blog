@@ -5,12 +5,11 @@ interface LoginData {
 
 export async function useLogin(loginData: LoginData) {
   const userCookie = useCookie("user", {
-    decode: (value) => {
-      return value;
-    },
+    maxAge: 60 * 60 * 1, // 1 hour
+    path: "/",
+    ssr: true,
   });
-  const refreshToken = useCookie("refreshToken");
-  const { data } = await useAPI("custom/v1/login", {
+  const { data, error } = await useAPI("custom/v1/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -22,11 +21,11 @@ export async function useLogin(loginData: LoginData) {
     }),
   });
 
-  console.log(data.value);
-
-  if (data.value.status === "success") {
-    userCookie.value = data.value?.cookie;
-    refreshToken.value = data.value.cookie;
+  if (data.value) {
+    userCookie.value = data.value.cookie;
     navigateTo("/");
+    return "Success";
+  } else if (error.value) {
+    return error.value.data.message;
   }
 }

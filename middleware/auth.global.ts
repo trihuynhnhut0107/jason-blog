@@ -4,13 +4,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   }
 
   const userCookie = useCookie("user");
-  if (!userCookie) {
-    navigateTo("/login");
+  if (!userCookie.value) {
+    return navigateTo("/login");
   }
   const { data, error } = await useAPI("custom/v1/secure-data", {
     credentials: "include",
   });
-  if (error.value !== null) {
+  if (error.value) {
     useLogout();
   }
 });
