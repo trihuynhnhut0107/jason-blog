@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL || "http://localhost/test-wp/wp-json/",
+      accountNumber: process.env.BANK_ACCOUNT_NUMBER,
+      accountName: process.env.BANK_ACCOUNT_NAME,
+      bankBinNumber: process.env.BANK_BIN_NUMBER,
+      paymentInfo: process.env.PAYMENT_INFO,
     },
   },
   css: [

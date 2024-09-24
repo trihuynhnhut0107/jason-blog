@@ -43,12 +43,13 @@
         </div>
       </div>
 
-      <div class="flex flex-row items-center justify-center space-x-1">
+      <div
+        class="flex flex-row items-center justify-center space-x-1 text-center">
         Page:
         <input
           type="text"
           v-model="currentPageNumber"
-          class="flex text-center w-12 border-2 p-1 m-1 rounded-md" />
+          class="text-center w-12 border-2 p-1 m-1 rounded-md" />
         /
         {{ totalPages }}
       </div>

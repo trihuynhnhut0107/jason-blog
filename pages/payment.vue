@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="flex flex-col h-full w-full justify-center items-center">
     <img :src="paymentQRData.data.qrDataURL" alt="" />
+    <button>Complete Payment</button>
   </div>
 </template>
 
@@ -14,6 +15,7 @@ const tokenAmount = Number(useCookie("tokenQuantity").value);
 console.log(tokenAmount);
 
 const tokenPrice = 1000;
+const config = useRuntimeConfig();
 
 const { data: paymentQRData, error } = await useFetch(
   "https://api.vietqr.io/v2/generate",
@@ -25,18 +27,15 @@ const { data: paymentQRData, error } = await useFetch(
       "x-api-key": "77912649-c1f3-4370-bbf4-04b713a645dd",
     },
     body: JSON.stringify({
-      accountNo: process.env.BANK_ACCOUNT_NUMBER,
-      accountName: process.env.BANK_ACCOUNT_NAME,
-      acqId: process.env.BANK_BIN_NUMBER,
-      addInfo: process.env.PAYMENT_INFO,
+      accountNo: config.public.accountNumber,
+      accountName: config.public.accountName,
+      acqId: config.public.bankBinNumber,
+      addInfo: config.public.paymentInfo,
       amount: tokenAmount * tokenPrice,
       template: "compact",
     }),
   }
 );
-
-console.log(paymentQRData.value);
-console.log(error.value);
 </script>
 
 <style></style>

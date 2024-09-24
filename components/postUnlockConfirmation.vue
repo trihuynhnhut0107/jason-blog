@@ -22,6 +22,8 @@
 </template>
 
 <script lang="ts" setup>
+const router = useRouter();
+
 const popupActive = defineModel("popupActive");
 const purchasingPost = defineModel("purchasingPost");
 const currentPost = defineModel("currentPost");
@@ -49,6 +51,9 @@ async function unlockPost(postID: number) {
       alert(err);
     } finally {
       purchasingPost.value = false;
+      popupActive.value = false;
+      refreshNuxtData();
+      router.push("/");
     }
   } else {
     popupActive.value = false;
