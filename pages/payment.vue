@@ -1,7 +1,18 @@
 <template>
-  <div class="flex flex-col h-full w-full justify-center items-center">
+  <div
+    class="flex flex-col h-full w-full justify-center items-center space-y-4 my-auto">
     <img :src="paymentQRData.data.qrDataURL" alt="" />
-    <button>Complete Payment</button>
+    <p class="font-roboto text-xl">
+      Please click the button below after completed the payment.
+    </p>
+    <p class="font-roboto text-xl">
+      Token amount will be updated after when admin verifies the payment.
+    </p>
+    <NuxtLink
+      to="/"
+      class="border-2 px-4 py-2 hover:bg-black hover:text-white rounded-md font-roboto text-xl">
+      Complete Payment
+    </NuxtLink>
   </div>
 </template>
 
@@ -32,7 +43,7 @@ const { data: paymentQRData, error } = await useFetch(
       acqId: config.public.bankBinNumber,
       addInfo: config.public.paymentInfo,
       amount: tokenAmount * tokenPrice,
-      template: "compact",
+      template: "compact2",
     }),
   }
 );

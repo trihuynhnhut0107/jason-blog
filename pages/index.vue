@@ -5,7 +5,7 @@
       v-model:purchasingPost="confirmPurchasingPost"
       v-model:currentPost="currentPost" />
 
-    <div v-if="!loading" class="flex flex-col">
+    <div v-if="restrictedPostInfo" class="flex flex-col">
       <div
         v-for="item in restrictedPostInfo.posts"
         class="flex flex-col space-y-4">
@@ -53,6 +53,9 @@
         /
         {{ totalPages }}
       </div>
+    </div>
+    <div v-else>
+      <h1>No available post</h1>
     </div>
   </div>
 </template>

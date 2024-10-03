@@ -23,6 +23,13 @@
         v-model="signupData.password" />
     </div>
     <div>
+      <p
+        :class="{ invisible: !isSignupError }"
+        class="text-red-text bg-red-200 px-4 py-2 rounded-md duration-75">
+        {{ signupError }}!
+      </p>
+    </div>
+    <div>
       <button class="px-4 py-2 border-b-2 hover:text-red-text" @click="submit">
         Submit
       </button>
@@ -45,6 +52,16 @@ const signupData = ref({
   email: "",
   username: "",
   password: "",
+});
+
+const signupError = ref("");
+const isSignupError = ref(false);
+watch(signupError, (newSignupError: string) => {
+  if (newSignupError !== "" && newSignupError !== "Success") {
+    isSignupError.value = true;
+  } else {
+    isSignupError.value = false;
+  }
 });
 
 async function submit() {

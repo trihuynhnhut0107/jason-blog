@@ -6,8 +6,6 @@ interface LoginData {
 export async function useLogin(loginData: LoginData) {
   const userCookie = useCookie("user", {
     maxAge: 60 * 60 * 1, // 1 hour
-    path: "/",
-    ssr: true,
   });
   const { data, error } = await useAPI("custom/v1/login", {
     method: "POST",

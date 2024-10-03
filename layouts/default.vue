@@ -32,7 +32,9 @@
           </button>
         </div>
       </div>
-      <div class="w-full h-full p-6"><slot /></div>
+      <div class="w-full h-full p-6">
+        <slot />
+      </div>
       <div class="w-1/4 p-6 space-y-4">
         <div class="flex flex-col sticky top-2">
           <input
@@ -67,6 +69,10 @@ const { data: tokenInfo } = await useAPI("custom/v1/get-token", {
 console.log(tokenInfo.value);
 
 function navigateToSearch() {
+  if (search.value === "") {
+    navigateTo("/");
+    return;
+  }
   navigateTo({
     path: "/search",
     query: {
