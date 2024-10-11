@@ -42,8 +42,7 @@ async function unlockPost(postID: number) {
       });
 
       if (error?.value) {
-        console.error("Error:", error?.value?.data?.message || error?.value);
-        throw new Error(error?.value?.data?.message || "An error occurred");
+        throw alert(error.value.data.message);
       }
 
       console.log(buyPostInfo.value);

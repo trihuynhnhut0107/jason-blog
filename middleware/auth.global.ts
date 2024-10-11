@@ -1,16 +1,17 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  if (to.path === "/login" || to.path === "/signup") {
+  if (
+    to.path === "/login" ||
+    to.path === "/signup" ||
+    from.path === "/login" ||
+    from.path === "signup"
+  ) {
     return;
   }
-
-  const userCookie = useCookie("user");
-  if (!userCookie.value) {
-    return navigateTo("/login");
-  }
-  const { data, error } = await useAPI("custom/v1/secure-data", {
+  const { data: authStatus, error } = await useAPI("custom/v1/permission", {
     credentials: "include",
   });
-  if (error.value) {
-    useLogout();
+  console.log(error, !authStatus, authStatus.value.loggedIn);
+  if (error.value || !authStatus || authStatus.value.loggedIn === false) {
+    return navigateTo("/login");
   }
 });

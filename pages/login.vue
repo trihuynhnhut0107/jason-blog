@@ -48,8 +48,6 @@ interface LoginData {
   password: string;
 }
 
-const userCookie = useCookie("user");
-
 const loginData = ref({
   username: "",
   password: "",

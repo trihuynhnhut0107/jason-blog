@@ -6,13 +6,8 @@
         <NuxtLink to="/"
           ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
         >
-        <div class="flex flex-row space-x-4">
+        <div class="flex flex-row space-x-4 font-roboto">
           <div>Token: {{ tokenInfo.token }}</div>
-          <div>
-            <NuxtLink to="/store" class="hover:text-red-text duration-100"
-              >Store</NuxtLink
-            >
-          </div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
               Log out
@@ -21,20 +16,9 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-row w-full container mx-auto divide-x-2">
-      <div class="w-1/4 h-full">
-        <div v-for="item in leftSectionItemCount">
-          <button class="items-center px-4 py-2 duration-100">
-            <img
-              src="\public\image\steal-10th_3D-600x679.jpg"
-              alt="Book image" />
-            Book number: {{ item }}
-          </button>
-        </div>
-      </div>
-      <div class="w-full h-full p-6">
-        <slot />
-      </div>
+    <div class="flex flex-row w-full container mx-auto">
+      <div class="w-1/4 p-6 space-y-4"></div>
+      <div class="w-full h-full p-6 font-roboto"><slot /></div>
       <div class="w-1/4 p-6 space-y-4">
         <div class="flex flex-col sticky top-2">
           <input
@@ -56,18 +40,10 @@
 </template>
 
 <script setup lang="ts">
-const leftSectionItemCount = ref(5);
-const router = useRouter();
-const route = useRoute();
-
 const search = ref("");
-
 const { data: tokenInfo } = await useAPI("custom/v1/get-token", {
   credentials: "include",
 });
-
-console.log(tokenInfo.value);
-
 function navigateToSearch() {
   if (search.value === "") {
     navigateTo("/");
@@ -83,7 +59,6 @@ function navigateToSearch() {
 
 function logout() {
   useLogout();
-  refreshNuxtData();
 }
 </script>
 

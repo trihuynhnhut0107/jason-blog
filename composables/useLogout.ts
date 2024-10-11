@@ -1,5 +1,8 @@
 export const useLogout = () => {
-  const userCookie = useCookie("user");
-  userCookie.value = null;
+  const { data } = useAPI("custom/v1/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+  console.log(data.value);
   navigateTo("/login");
 };

@@ -5,7 +5,7 @@
       v-model:purchasingPost="confirmPurchasingPost"
       v-model:currentPost="currentPost" />
 
-    <div v-if="restrictedPostInfo" class="flex flex-col">
+    <div v-if="restrictedPostInfo && totalPages > 0" class="flex flex-col">
       <div
         v-for="item in restrictedPostInfo.posts"
         class="flex flex-col space-y-4">
@@ -61,14 +61,6 @@
 </template>
 
 <script lang="ts" setup>
-const route = useRoute();
-const router = useRouter();
-
-const userCookie = useCookie("user");
-if (!userCookie.value) {
-  navigateTo("/login");
-}
-
 const options = ref({
   year: "numeric",
   month: "long",
@@ -112,7 +104,6 @@ watch(currentPageNumber, (newPageNumber) => {
       fetchPostByPage(newPageNumber);
     }, 500);
   }
-  console.log(newPageNumber);
 });
 
 function navigateToPost(post: object) {

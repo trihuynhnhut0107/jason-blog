@@ -4,9 +4,6 @@ interface LoginData {
 }
 
 export async function useLogin(loginData: LoginData) {
-  const userCookie = useCookie("user", {
-    maxAge: 60 * 60 * 1, // 1 hour
-  });
   const { data, error } = await useAPI("custom/v1/login", {
     method: "POST",
     headers: {
@@ -18,9 +15,8 @@ export async function useLogin(loginData: LoginData) {
       password: loginData.password,
     }),
   });
-
   if (data.value) {
-    userCookie.value = data.value.cookie;
+    console.log(data.value);
     navigateTo("/");
     return "Success";
   } else if (error.value) {

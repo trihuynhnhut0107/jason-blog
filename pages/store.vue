@@ -59,6 +59,7 @@ function purchaseItem() {
   const tokenQuantityCookie = useCookie("tokenQuantity");
   tokenQuantityCookie.value = String(itemQuantity.value);
   navigateTo("/payment");
+  return;
 }
 </script>
 
