@@ -37,12 +37,12 @@ async function unlockPost(postID: number) {
         method: "POST",
         credentials: "include", // Correct spelling
         body: JSON.stringify({
-          product_id: postID,
+          post_id: postID,
         }),
       });
 
       if (error?.value) {
-        throw alert(error.value.data.message);
+        throw alert(error.value);
       }
 
       console.log(buyPostInfo.value);
