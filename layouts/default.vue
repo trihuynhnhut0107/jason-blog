@@ -7,6 +7,11 @@
           ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
         >
         <div class="flex flex-row space-x-4 font-roboto">
+          <div>
+            <NuxtLink to="/store" class="hover:text-red-text duration-100"
+              >Store</NuxtLink
+            >
+          </div>
           <div>Token: {{ tokenInfo.token }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">

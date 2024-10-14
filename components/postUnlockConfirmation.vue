@@ -51,8 +51,6 @@ async function unlockPost(postID: number) {
     } finally {
       purchasingPost.value = false;
       popupActive.value = false;
-      refreshNuxtData();
-      router.push("/");
     }
   } else {
     popupActive.value = false;
