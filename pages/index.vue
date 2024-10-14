@@ -73,7 +73,7 @@ const loading = ref(false);
 
 const currentPageNumber = ref(1);
 
-fetchPostByPage(1);
+// fetchPostByPage(1);
 const totalPages = ref(0);
 async function fetchPostByPage(pageNumber: number) {
   try {
@@ -95,16 +95,16 @@ async function fetchPostByPage(pageNumber: number) {
   }
 }
 
-watch(currentPageNumber, (newPageNumber) => {
-  if (newPageNumber === null) {
-  }
-  if (newPageNumber <= totalPages.value && newPageNumber > 0) {
-    currentPageNumber.value = newPageNumber;
-    setTimeout(function () {
-      fetchPostByPage(newPageNumber);
-    }, 500);
-  }
-});
+// watch(currentPageNumber, (newPageNumber) => {
+//   if (newPageNumber === null) {
+//   }
+//   if (newPageNumber <= totalPages.value && newPageNumber > 0) {
+//     currentPageNumber.value = newPageNumber;
+//     setTimeout(function () {
+//       fetchPostByPage(newPageNumber);
+//     }, 500);
+//   }
+// });
 
 function navigateToPost(post: object) {
   navigateTo(`/${post.post.post_name}`);

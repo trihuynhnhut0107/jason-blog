@@ -7,7 +7,7 @@
           ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
         >
         <div class="flex flex-row space-x-4 font-roboto">
-          <div>Token: {{ tokenInfo.token }}</div>
+          <div>Token: {{ token }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
               Log out
@@ -41,8 +41,24 @@
 
 <script setup lang="ts">
 const search = ref("");
-const { data: tokenInfo } = await useAPI("custom/v1/get-token", {
-  credentials: "include",
+const token = ref(0)
+const fetchToken = async () => {
+  const headers = useRequestHeaders(['cookie'])
+  try {
+    const reponse = await $fetch("api/tokens/token", {
+      credentials: "include",
+    });
+    console.log(reponse);
+    return reponse.token
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// During SSR, token will be fetched, and it can refetch on client if needed
+onMounted(async () => {
+  token.value = await fetchToken();
+  console.log(token.value)
 });
 function navigateToSearch() {
   if (search.value === "") {

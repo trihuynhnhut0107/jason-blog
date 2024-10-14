@@ -65,35 +65,30 @@ watch(signupError, (newSignupError: string) => {
 });
 
 async function submit() {
-  const { data: signUpInfo, error: signUpError } = await useAPI(
-    "custom/v1/signup",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        email: signupData.value.email,
-        username: signupData.value.username,
-        password: signupData.value.password,
-      }),
-    }
-  );
-  console.log(signUpInfo.value);
-  if (signUpError.value !== null) {
-    signupData.value = {
-      email: "",
-      username: "",
-      password: "",
-    };
-    throw alert(signUpError.value?.data.message);
-  } else if (signUpInfo) {
+  try {
+  const signupResponse = await $fetch("api/authentication/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      email: signupData.value.email,
+      username: signupData.value.username,
+      password: signupData.value.password,
+    }),
+  });
+
+ 
+  if (signupResponse?.statusCode === 200) {
     await useLogin({
       username: signupData.value.username,
       password: signupData.value.password,
     });
   }
+} catch (error) {
+  signupError.value = error?.data?.message || "An unexpected error occurred";
+}
 }
 </script>
 

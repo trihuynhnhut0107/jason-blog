@@ -4,7 +4,7 @@ interface LoginData {
 }
 
 export async function useLogin(loginData: LoginData) {
-  const { data, error } = await useAPI("custom/v1/login", {
+  const { data, error } = await useFetch("/api/authentication/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -15,11 +15,13 @@ export async function useLogin(loginData: LoginData) {
       password: loginData.password,
     }),
   });
+  
   if (data.value) {
-    console.log(data.value);
     navigateTo("/");
     return "Success";
-  } else if (error.value) {
-    return error.value.data.message;
+  }
+  
+  if (error.value) {
+    return error.value.data.message || "An error occurred";
   }
 }

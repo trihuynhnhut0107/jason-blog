@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-
+  ssr: true,
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL || "http://localhost/test-wp/wp-json/",

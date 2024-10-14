@@ -14,7 +14,7 @@
 import { ref } from "vue";
 const route = useRoute();
 const slug = ref("");
-
+const postData = ref([])
 if (route.params.slug) {
   let lastIndex = route.params.slug.length - 1;
   if (!route.params.slug[lastIndex]) {
@@ -33,15 +33,15 @@ const options = ref({
   day: "numeric",
 });
 
-const {
-  data: postData,
-  pending,
-  error,
-  refresh,
-} = await useFetch("http://localhost/test-wp/wp-json/wp/v2/posts?", {
-  query: { slug: slug.value },
-});
-console.log(postData.value);
+
+try {
+    const data = await $fetch('/api/posts', {
+      params: { slug: slug.value },
+    })
+    postData.value = data.data
+  } catch (err) {
+    error.value = err.message
+  }
 </script>
 
 <style scoped>
