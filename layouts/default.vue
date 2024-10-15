@@ -7,6 +7,11 @@
           ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
         >
         <div class="flex flex-row space-x-4 font-roboto">
+          <div>
+            <NuxtLink to="/store" class="hover:text-red-text duration-100"
+              >Store</NuxtLink
+            >
+          </div>
           <div>Token: {{ token }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
@@ -43,7 +48,6 @@
 const search = ref("");
 const token = ref(0)
 const fetchToken = async () => {
-  const headers = useRequestHeaders(['cookie'])
   try {
     const reponse = await $fetch("api/tokens/token", {
       credentials: "include",
@@ -58,7 +62,6 @@ const fetchToken = async () => {
 // During SSR, token will be fetched, and it can refetch on client if needed
 onMounted(async () => {
   token.value = await fetchToken();
-  console.log(token.value)
 });
 function navigateToSearch() {
   if (search.value === "") {

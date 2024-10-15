@@ -114,9 +114,12 @@ const pucharsingPopupActive = ref(false);
 const confirmPurchasingPost = ref(false);
 const currentPost = ref(-1);
 
-function showPurchasingDialog(post_productID: number) {
+async function showPurchasingDialog(post_productID: number) {
   currentPost.value = post_productID;
   pucharsingPopupActive.value = true;
+  if (!confirmPurchasingPost.value && !pucharsingPopupActive.value) {
+    await refreshNuxtData();
+  }
 }
 </script>
 
