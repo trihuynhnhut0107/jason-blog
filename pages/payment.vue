@@ -28,14 +28,13 @@ console.log(tokenAmount);
 const tokenPrice = 1000;
 const config = useRuntimeConfig();
 
-const { data: paymentQRData, error } = await useFetch(
-  "https://api.vietqr.io/v2/generate",
-  {
-    method: "POST",
+try {
+  const paymentQRData = await $fetch('https://api.vietqr.io/v2/generate', {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      "x-client-id": "5a0397ec-5551-498d-b3e5-78e16eecc535",
-      "x-api-key": "77912649-c1f3-4370-bbf4-04b713a645dd",
+      'Content-Type': 'application/json',
+      'x-client-id': '5a0397ec-5551-498d-b3e5-78e16eecc535',
+      'x-api-key': '77912649-c1f3-4370-bbf4-04b713a645dd',
     },
     body: JSON.stringify({
       accountNo: config.public.accountNumber,
@@ -43,10 +42,11 @@ const { data: paymentQRData, error } = await useFetch(
       acqId: config.public.bankBinNumber,
       addInfo: config.public.paymentInfo,
       amount: tokenAmount * tokenPrice,
-      template: "compact2",
+      template: 'compact2',
     }),
-  }
-);
+  });
+} catch (error) {
+  console.error('Error fetching QR code:', error);
+}
 </script>
-
 <style></style>

@@ -105,7 +105,7 @@ async function fetchPostByPage(searchTerm: string, pageNumber: number) {
     });
     totalPages.value = data.value.total_pages;
     searchResults.value = data.value;
-    console.log(searchResults.value);
+    
   } catch (error) {
     console.log(error);
   } finally {

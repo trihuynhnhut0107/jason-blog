@@ -52,14 +52,12 @@ const fetchToken = async () => {
     const reponse = await $fetch("api/tokens/token", {
       credentials: "include",
     });
-    console.log(reponse);
     return reponse.token
   } catch (e) {
     console.log(e);
   }
 };
 
-// During SSR, token will be fetched, and it can refetch on client if needed
 onMounted(async () => {
   token.value = await fetchToken();
 });

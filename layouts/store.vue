@@ -7,7 +7,7 @@
           ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
         >
         <div class="flex flex-row space-x-4 font-roboto">
-          <div>Token: {{ tokenInfo.token }}</div>
+          <div>Token: {{ token }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
               Log out
@@ -25,18 +25,21 @@
 </template>
 
 <script setup lang="ts">
-const leftSectionItemCount = ref(5);
-const router = useRouter();
-const route = useRoute();
-
-const userCookie = useCookie("user");
-
-const { data: tokenInfo } = await useAPI("custom/v1/get-token", {
-  credentials: "include",
+const token = ref(0)
+const fetchToken = async () => {
+  try {
+    const reponse = await $fetch("api/tokens/token", {
+      credentials: "include",
+    });
+    return reponse.token
+  } catch (e) {
+    console.log(e);
+  }
+};
+onMounted(async () => {
+  token.value = await fetchToken();
 });
-
 function logout() {
-  userCookie.value = null;
   navigateTo("/login");
 }
 </script>
