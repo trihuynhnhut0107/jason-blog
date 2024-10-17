@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:8000/wp-json/custom/v1/login",
+      "http://localhost/test-wp/wp-json/custom/v1/login",
       {
         username,
         password,
@@ -17,8 +17,13 @@ export default defineEventHandler(async (event) => {
     );
     if (response && response.headers) {
       const setCookieHeader = response.headers["set-cookie"];
+      console.log("setCookieHeader", setCookieHeader);
       if (setCookieHeader) {
-        event.node.res.setHeader("Set-Cookie", setCookieHeader);
+        const cookieSetResponse = event.node.res.setHeader(
+          "Set-Cookie",
+          setCookieHeader
+        );
+        console.log("Cookie set response: ", cookieSetResponse);
       }
     }
     return response.data;

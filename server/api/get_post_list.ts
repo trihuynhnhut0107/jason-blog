@@ -1,20 +1,20 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event)
-  const slug = query.slug
+  const query = getQuery(event);
+  const slug = query.slug;
 
   try {
     // Make the request to the WordPress API using Axios
-    const response = await axios.get(`"http://localhost:8000/wp-json/custom/v1/get-post-list`, {
-      params: { slug }
-    })
+    const response = await axios.get(
+      `"http://localhost/test-wp/wp-json/custom/v1/get-post-list`
+    );
 
     // Return the response data to the frontend
     return {
       success: true,
       data: response.data,
-    }
+    };
   } catch (error) {
     const statusCode = error.response?.status || 500;
     const message =
@@ -31,4 +31,4 @@ export default defineEventHandler(async (event) => {
       },
     };
   }
-})
+});

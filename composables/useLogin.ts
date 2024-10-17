@@ -16,7 +16,7 @@ export async function useLogin(loginData: LoginData) {
         password: loginData.password,
       }),
     });
-  
+
     navigateTo("/");
     return "Success";
   } catch (error) {
