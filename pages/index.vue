@@ -73,21 +73,30 @@ const loading = ref(false);
 
 const currentPageNumber = ref(1);
 
-// fetchPostByPage(1);
+fetchPostByPage(1);
 const totalPages = ref(0);
+
+try {
+    const data = await $fetch('/api/posts', {
+      params: { slug: slug.value },
+    })
+    postData.value = data.data
+  } catch (err) {
+    console.log(err)
+  }
+
 async function fetchPostByPage(pageNumber: number) {
   try {
     loading.value = true;
-    const { data } = await useAPI("custom/v1/get-post-list", {
+    const {data} = await $fetch("api/get_post_list", {
       credentials: "include",
       params: {
         per_page: 2,
         page: pageNumber,
       },
     });
-    totalPages.value = data.value?.total_pages;
-    restrictedPostInfo.value = data.value;
-    console.log(restrictedPostInfo.value);
+    totalPages.value = data.total_pages;
+    restrictedPostInfo.value = data;
   } catch (error) {
     console.log(error);
   } finally {
@@ -95,16 +104,16 @@ async function fetchPostByPage(pageNumber: number) {
   }
 }
 
-// watch(currentPageNumber, (newPageNumber) => {
-//   if (newPageNumber === null) {
-//   }
-//   if (newPageNumber <= totalPages.value && newPageNumber > 0) {
-//     currentPageNumber.value = newPageNumber;
-//     setTimeout(function () {
-//       fetchPostByPage(newPageNumber);
-//     }, 500);
-//   }
-// });
+watch(currentPageNumber, (newPageNumber) => {
+  if (newPageNumber === null) {
+  }
+  if (newPageNumber <= totalPages.value && newPageNumber > 0) {
+    currentPageNumber.value = newPageNumber;
+    setTimeout(function () {
+      fetchPostByPage(newPageNumber);
+    }, 500);
+  }
+});
 
 function navigateToPost(post: object) {
   navigateTo(`/${post.post.post_name}`);

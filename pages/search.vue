@@ -89,13 +89,13 @@ fetchPostByPage(searchQuery.value, 1);
 const totalPages = ref(0);
 async function fetchPostByPage(searchTerm: string, pageNumber: number) {
   if (searchTerm === "") {
-    await navigateTo("/"); // Await navigation to complete
-    return; // Exit the function to prevent the try-catch block from running
+    await navigateTo("/"); 
+    return;
   }
 
   try {
     loading.value = true;
-    const { data } = await useAPI("custom/v1/get-post-list", {
+    const data = await $fetch("api/get_post_list", {
       credentials: "include",
       params: {
         per_page: 2,
@@ -103,16 +103,14 @@ async function fetchPostByPage(searchTerm: string, pageNumber: number) {
         search: searchTerm,
       },
     });
-    totalPages.value = data.value.total_pages;
-    searchResults.value = data.value;
-    
+    totalPages.value = data.total_pages;
+    searchResults.value = data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   } finally {
     loading.value = false;
   }
 }
-
 watch(currentPageNumber, (newPageNumber) => {
   if (newPageNumber === null) {
   }
@@ -122,7 +120,6 @@ watch(currentPageNumber, (newPageNumber) => {
       fetchPostByPage(newPageNumber);
     }, 500);
   }
-  console.log(newPageNumber);
 });
 
 function navigateToPost(post: object) {

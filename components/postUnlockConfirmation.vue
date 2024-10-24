@@ -33,19 +33,14 @@ async function unlockPost(postID: number) {
 
   if (postID !== -1) {
     try {
-      const { data: buyPostInfo, error } = await useAPI("custom/v1/buypost", {
+      const buyPostInfo = await $fetch("api/buypost", {
         method: "POST",
-        credentials: "include", // Correct spelling
-        body: JSON.stringify({
-          post_id: postID,
-        }),
+        credentials: "include",
+        body: {
+          post_id: postID, // Automatically stringified by $fetch
+        },
       });
 
-      if (error?.value) {
-        throw alert(error.value);
-      }
-
-      console.log(buyPostInfo.value);
     } catch (err) {
       alert(err);
     } finally {
@@ -57,6 +52,7 @@ async function unlockPost(postID: number) {
     alert("Post ID is not valid");
   }
 }
+
 
 function cancelPurcharsing() {
   popupActive.value = false;
