@@ -23,7 +23,6 @@ definePageMeta({
 });
 
 const tokenAmount = Number(useCookie("tokenQuantity").value);
-console.log(tokenAmount);
 
 const tokenPrice = 1000;
 const config = useRuntimeConfig();

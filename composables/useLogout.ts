@@ -1,6 +1,6 @@
 export const useLogout = async () => {
   try {
-    const data = await $fetch('"http://localhost:8000/wp-json/custom/v1/logout', {
+    const data = await $fetch('http://localhost:8000/wp-json/custom/v1/logout', {
       method: 'POST',
       credentials: 'include',
     });
