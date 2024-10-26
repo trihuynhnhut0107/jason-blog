@@ -4,8 +4,7 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event)
   const perPage = query.per_page || 2; 
   const page = query.page || 1;        
-  const cookies = event.node.req.headers.cookie;  
-
+  const cookies = event.node.req.headers.cookie;
   try {
     // Make the request to the WordPress API using Axios
     const response = await axios.get('http://localhost:8000/wp-json/custom/v1/get-post-list', {

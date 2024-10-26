@@ -4,7 +4,6 @@ export const useLogout = async () => {
       method: 'POST',
       credentials: 'include',
     });
-    console.log('Logout successful:', data);
   } catch (error) {
     console.error('Error during logout:', error);
   }

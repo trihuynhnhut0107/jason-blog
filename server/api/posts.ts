@@ -3,16 +3,14 @@ import axios from "axios";
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const slug = query.slug;
-
   try {
     // Make the request to the WordPress API using Axios
     const response = await axios.get(
-      `http://localhost/test-wp/wp-json/wp/v2/posts`,
+      `http://localhost:8000/wp-json/wp/v2/posts`,
       {
         params: { slug },
       }
     );
-
     return {
       success: true,
       data: response.data,

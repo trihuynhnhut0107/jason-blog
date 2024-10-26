@@ -73,9 +73,10 @@ const loading = ref(false);
 
 const currentPageNumber = ref(1);
 
-fetchPostByPage(1);
-const totalPages = ref(0);
 
+const totalPages = ref(0);
+const slug = ref('');
+const postData = ref([])
 try {
     const data = await $fetch('/api/posts', {
       params: { slug: slug.value },
@@ -88,7 +89,7 @@ try {
 async function fetchPostByPage(pageNumber: number) {
   try {
     loading.value = true;
-    const {data} = await $fetch("api/get_post_list", {
+    const {data} = await $fetch("/api/get_post_list", {
       credentials: "include",
       params: {
         per_page: 2,
@@ -115,6 +116,7 @@ watch(currentPageNumber, (newPageNumber) => {
   }
 });
 
+
 function navigateToPost(post: object) {
   navigateTo(`/${post.post.post_name}`);
 }
@@ -130,6 +132,14 @@ async function showPurchasingDialog(post_productID: number) {
     await refreshNuxtData();
   }
 }
+fetchPostByPage(1);
+watch(pucharsingPopupActive, async (newValue) => {
+  if (newValue === false) {
+    await fetchPostByPage(currentPageNumber.value);
+  }
+
+});
+
 </script>
 
 <style scoped>

@@ -37,12 +37,14 @@ async function unlockPost(postID: number) {
         method: "POST",
         credentials: "include",
         body: {
-          post_id: postID, // Automatically stringified by $fetch
+          post_id: postID,
         },
       });
 
+      console.log(buyPostInfo);
     } catch (err) {
-      alert(err);
+      const message = err?.data?.message || err?.message || "An unexpected error occurred";
+      alert(message);
     } finally {
       purchasingPost.value = false;
       popupActive.value = false;

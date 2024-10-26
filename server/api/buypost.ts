@@ -32,10 +32,12 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     const statusCode = error.response?.status || 500;
     const message =
+    error.response.data ||
       error.response?.data?.message ||
       error.message ||
+      
       "An unexpected error occurred";
-
+ 
     event.node.res.statusCode = statusCode;
     return {
       success: false,
