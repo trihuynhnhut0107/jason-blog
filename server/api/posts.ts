@@ -1,12 +1,13 @@
 import axios from "axios";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
   const query = getQuery(event);
   const slug = query.slug;
   try {
     // Make the request to the WordPress API using Axios
     const response = await axios.get(
-      `http://localhost:8000/wp-json/wp/v2/posts`,
+      `${config.public.baseURL}/wp/v2/posts`,
       {
         params: { slug },
       }

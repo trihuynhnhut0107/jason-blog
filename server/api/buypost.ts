@@ -3,7 +3,7 @@ import axios from "axios";
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const postID = body.post_id;
-
+  const config = useRuntimeConfig();
   if (!postID) {
     throw createError({
       statusCode: 400,
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:8000/wp-json/custom/v1/buypost",
+      `${config.public.baseURL}/custom/v1/buypost`,
       {
         post_id: postID,
       },

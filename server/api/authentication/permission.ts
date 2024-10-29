@@ -1,8 +1,9 @@
 import axios from "axios";
 export default defineEventHandler(async (event) => {
   const cookies = event.node.req.headers.cookie;
+  const config = useRuntimeConfig();
   const response = await axios.get(
-    "http://localhost:8000/wp-json/custom/v1/permission",
+    `${config.public.baseURL}/custom/v1/permission`,
     {
       withCredentials: true,
       headers: {

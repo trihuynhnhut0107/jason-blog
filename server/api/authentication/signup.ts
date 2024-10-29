@@ -1,10 +1,10 @@
 import axios from "axios";
 export default defineEventHandler(async (event) => {
   const { email, username, password } = await readBody(event);
-  
+  const config = useRuntimeConfig();
   try {
     const response = await axios.post(
-      "http://localhost:8000/wp-json/custom/v1/signup",
+      `${config.public.baseURL}/custom/v1/signup`,
       {
         username,
         password,
