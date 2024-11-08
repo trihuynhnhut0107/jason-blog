@@ -101,7 +101,7 @@ function logout() {
 </script>
 
 <style scoped>
-::selection {
+:deep()::selection {
   color: white;
   background: black;
 }
