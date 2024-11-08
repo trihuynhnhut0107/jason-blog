@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen max-w-screen bg-white">
+  <div class="h-screen w-screen max-w-screen bg-white">
     <div class="header w-full bg-black text-white">
       <div
         class="container mx-auto w-11/12 px-2 py-4 lg:p-4 lg:w-2/3 flex flex-row justify-between items-center">
@@ -28,7 +28,7 @@
       <div class="w-1/4 p-6 space-y-4 hidden md:block"></div>
       <div
         class="w-full h-full p-6 font-roboto flex flex-col items-center justify-center space-y-6">
-        <div class="flex flex-col sticky top-2 md:hidden w-1/2">
+        <div class="flex flex-col top-2 md:hidden w-1/2">
           <input
             type="text"
             v-model="search"
@@ -45,7 +45,7 @@
           <slot />
         </div>
       </div>
-      <div class="w-1/4 p-6 space-y-4 hidden md:block">
+      <div class="w-1/4 p-6 md:flex flex-col space-y-4 hidden">
         <div class="flex flex-col sticky top-2">
           <input
             type="text"
@@ -59,13 +59,50 @@
             Search
           </button>
         </div>
-        <div></div>
+        <div>
+          <div
+            class="max-w-sm mx-auto bg-white shadow-md rounded-md overflow-hidden">
+            <div class="bg-gray-800 text-white text-center py-2">
+              <h2 class="text-md font-medium">Top Posts</h2>
+            </div>
+            <div class="p-2">
+              <table class="w-full text-center">
+                <thead>
+                  <tr class="text-gray-600 text-xs uppercase">
+                    <th class="p-1">#</th>
+                    <th class="p-1">Title</th>
+                    <th class="p-1">Views</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(post, index) in topViewedPosts"
+                    :key="post.id"
+                    class="border-t">
+                    <td class="py-1">{{ index + 1 }}</td>
+                    <td class="py-1">
+                      <button
+                        @click="navigateToPost(post.slug)"
+                        class="w-full px-2 text-left line-clamp-1 hover:text-red-text hover:underline focus:outline-none"
+                        :title="post.title">
+                        {{ post.title }}
+                      </button>
+                    </td>
+                    <td class="py-1">{{ post.view_count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const config = useRuntimeConfig();
+const route = useRoute();
 const search = ref("");
 const token = ref(0);
 const fetchToken = async () => {
@@ -79,9 +116,27 @@ const fetchToken = async () => {
   }
 };
 
+const topViewedPosts = ref([]);
+
+const fetchTopViewedPosts = async () => {
+  const data = await $fetch(`/api/get_top_views_posts`);
+  console.log("Data:::", data);
+  topViewedPosts.value = data.data;
+};
+
 onMounted(async () => {
   token.value = await fetchToken();
+  fetchTopViewedPosts();
 });
+
+watch(
+  () => route.fullPath,
+  async () => {
+    await fetchTopViewedPosts();
+    console.log(topViewedPosts.value);
+  }
+);
+
 function navigateToSearch() {
   if (search.value === "") {
     navigateTo("/");
@@ -93,6 +148,10 @@ function navigateToSearch() {
       search: search.value,
     },
   });
+}
+
+function navigateToPost(slug) {
+  navigateTo(`/${slug}`);
 }
 
 function logout() {

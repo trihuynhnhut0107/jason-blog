@@ -4,24 +4,30 @@
       v-model:popupActive="pucharsingPopupActive"
       v-model:purchasingPost="confirmPurchasingPost"
       v-model:currentPost="currentPost" />
-    <div class="space-y-6">
-      <h1 class="font-oswald">{{ postData.post.post_title }}</h1>
-      <h5>
-        {{
-          new Date(postData.post.post_date).toLocaleDateString("en-US", options)
-        }}
-      </h5>
-      <div :class="`${postData.has_access ? '' : 'fade-effect'}`">
-        <div v-html="postData.post.post_content"></div>
-      </div>
-      <div
-        v-if="!postData.has_access"
-        class="flex flex-row items-center justify-center">
-        <button
-          @click="showPurchasingDialog(postData.post.ID)"
-          class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75">
-          Unlock?
-        </button>
+    <div v-if="postData.length === 0">Loading...</div>
+    <div v-else>
+      <div class="space-y-6">
+        <h1 class="font-oswald">{{ postData.post.post_title }}</h1>
+        <h5>
+          {{
+            new Date(postData.post.post_date).toLocaleDateString(
+              "en-US",
+              options
+            )
+          }}
+        </h5>
+        <div :class="`${!postData.has_access ? 'fade-effect' : ''}`">
+          <div v-html="postData.post.post_content"></div>
+        </div>
+        <div
+          v-if="!postData.has_access"
+          class="flex flex-row items-center justify-center">
+          <button
+            @click="showPurchasingDialog(postData.post.ID)"
+            class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75">
+            Unlock?
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -51,11 +57,9 @@ const options = ref({
 });
 
 try {
-  const data = await $fetch("/api/posts", {
-    params: { slug: slug.value },
-  });
+  const data = await $fetch(`/api/posts`, { params: { slug: slug.value } });
+
   postData.value = data.data;
-  console.log(postData.value);
 } catch (err) {
   // error.value = err.message;
 }
