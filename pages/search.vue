@@ -89,7 +89,7 @@ fetchPostByPage(searchQuery.value, 1);
 const totalPages = ref(0);
 async function fetchPostByPage(searchTerm: string, pageNumber: number) {
   if (searchTerm === "") {
-    await navigateTo("/"); 
+    await navigateTo("/");
     return;
   }
 
@@ -117,7 +117,7 @@ watch(currentPageNumber, (newPageNumber) => {
   if (newPageNumber <= totalPages.value && newPageNumber > 0) {
     currentPageNumber.value = newPageNumber;
     setTimeout(function () {
-      fetchPostByPage(newPageNumber);
+      fetchPostByPage(searchQuery.value, newPageNumber);
     }, 500);
   }
 });

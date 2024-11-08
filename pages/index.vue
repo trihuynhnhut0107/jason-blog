@@ -17,30 +17,13 @@
           <h1 class="text-4xl text-start font-oswald">
             {{ item.post.post_title }}
           </h1>
-        </button>
-        <h5 class="text-start">
-          {{
-            new Date(item.post.post_date).toLocaleDateString("en-US", options)
-          }}
-        </h5>
-        <button
-          :class="`${
-            item.has_access
-              ? ''
-              : 'blur-md pointer-events-none cursor-not-allowed'
-          } hover:text-red-text`"
-          @click="navigateToPost(item)">
+          <h5 class="text-start">
+            {{
+              new Date(item.post.post_date).toLocaleDateString("en-US", options)
+            }}
+          </h5>
           <div v-html="item.post.post_content" class="line-clamp-3"></div>
         </button>
-        <div
-          v-if="!item.has_access"
-          class="flex flex-row items-center justify-center">
-          <button
-            @click="showPurchasingDialog(item.post.ID)"
-            class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75">
-            Unlock?
-          </button>
-        </div>
       </div>
 
       <div
@@ -73,23 +56,14 @@ const loading = ref(false);
 
 const currentPageNumber = ref(1);
 
-
 const totalPages = ref(0);
-const slug = ref('');
-const postData = ref([])
-try {
-    const data = await $fetch('/api/posts', {
-      params: { slug: slug.value },
-    })
-    postData.value = data.data
-  } catch (err) {
-    console.log(err)
-  }
+const slug = ref("");
+const postData = ref([]);
 
 async function fetchPostByPage(pageNumber: number) {
   try {
     loading.value = true;
-    const {data} = await $fetch("/api/get_post_list", {
+    const { data } = await $fetch("/api/get_post_list", {
       credentials: "include",
       params: {
         per_page: 2,
@@ -116,7 +90,6 @@ watch(currentPageNumber, (newPageNumber) => {
   }
 });
 
-
 function navigateToPost(post: object) {
   navigateTo(`/${post.post.post_name}`);
 }
@@ -137,9 +110,7 @@ watch(pucharsingPopupActive, async (newValue) => {
   if (newValue === false) {
     await fetchPostByPage(currentPageNumber.value);
   }
-
 });
-
 </script>
 
 <style scoped>
