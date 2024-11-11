@@ -19,21 +19,21 @@
     </div>
     <div>
       <p
-        :class="{ invisible: !isLoginError }"
-        class="text-red-text bg-red-200 px-4 py-2 rounded-md duration-75">
-        {{ loginError }}!
+        :class="{ invisible: !loginError || loginError.length === 0  || loginError === 'Success'}"
+        class="text-red-600 bg-red-200 px-4 py-2 rounded-md duration-75">
+        {{ loginError }} !
       </p>
     </div>
     <div>
-      <button class="px-4 py-2 border-b-2 hover:text-red-text" @click="login">
+      <button class="px-4 py-2 border-b-2 hover:text-red-600" @click="login">
         Submit
       </button>
     </div>
     <div class="flex flex-row space-x-1">
-      <p>Don't have account?</p>
-      <NuxtLink to="/signup"
-        ><p class="underline hover:text-red-text">Sign up</p></NuxtLink
-      >
+      <p>Don't have an account?</p>
+      <NuxtLink to="/signup">
+        <p class="underline hover:text-red-600">Sign up</p>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -43,37 +43,14 @@ definePageMeta({
   layout: "blank",
 });
 
-interface LoginData {
-  username: string;
-  password: string;
-}
-
 const loginData = ref({
   username: "",
   password: "",
 });
 
-watch(
-  () => loginData.value,
-  (newLoginData: LoginData) => {
-    isLoginError.value = false;
-  },
-  { deep: true }
-);
-
 const loginError = ref("");
 const isLoginError = ref(false);
-watch(loginError, (newLoginError: string) => {
-  if (newLoginError !== "" && newLoginError !== "Success") {
-    isLoginError.value = true;
-  } else {
-    isLoginError.value = false;
-  }
-});
-
 async function login() {
   loginError.value = await useLogin(loginData.value);
 }
 </script>
-
-<style></style>
