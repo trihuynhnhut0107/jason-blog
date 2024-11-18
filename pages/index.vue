@@ -57,8 +57,9 @@
       <div
         v-for="item in data.data.posts"
         :key="item.id"
-        class="flex flex-col py-4 space-y-8">
+        class="flex flex-col py-4">
         <button
+          class="space-y-3"
           @click="navigateToPost(item)"
           :class="`${
             item.has_access ? '' : 'pointer-events-none cursor-not-allowed'
@@ -109,14 +110,12 @@ const purchasingPopupActive = ref(false);
 const confirmPurchasingPost = ref(false);
 const currentPost = ref(-1);
 
-const { data: categoryInfo } = await useFetch(
-  `${config.public.baseURL}/wp/v2/categories`,
-  {
-    params: {
-      orderby: "id",
-    },
-  }
-);
+const { data: categoryInfo } = await useFetch(`/api/get_categories`, {
+  params: {
+    orderby: "id",
+  },
+});
+console.log(categoryInfo.value);
 
 function organizeCategories(categories) {
   const parentChildArray = [];
@@ -192,7 +191,7 @@ const changeCategory = (category) => {
   console.log(categoryList.value);
 };
 
-const categoryList = ref(organizeCategories(categoryInfo.value));
+const categoryList = ref(organizeCategories(categoryInfo.value.data));
 
 console.log(categoryList.value);
 
