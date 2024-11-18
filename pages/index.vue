@@ -207,7 +207,7 @@ const { data, status, error, refresh } = await useFetch("/api/get_post_list", {
 });
 
 function navigateToPost(post: object) {
-  navigateTo(`/post/${post.post.post_name}`);
+  navigateTo(`/${post.post.post_name}`);
 }
 
 watch(purchasingPopupActive, async (newValue) => {
@@ -215,8 +215,6 @@ watch(purchasingPopupActive, async (newValue) => {
     refresh();
   }
 });
-
-const isOpen = ref(false);
 </script>
 
 <style scoped>

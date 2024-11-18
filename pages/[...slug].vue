@@ -5,7 +5,7 @@
       v-model:purchasingPost="confirmPurchasingPost"
       v-model:currentPost="currentPost" />
     <div v-if="fetchPending === 'pending'">Loading...</div>
-    <div v-else>
+    <div v-else class="h-full w-full">
       <div class="space-y-6">
         <h1 class="font-oswald">{{ postData.data.post.post_title }}</h1>
         <h5>

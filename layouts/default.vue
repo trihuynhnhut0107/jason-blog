@@ -45,7 +45,7 @@
           <slot />
         </div>
       </div>
-      <div class="w-1/4 p-6 md:flex md:flex-col hidden">
+      <div class="w-1/4 py-6 md:flex md:flex-col hidden">
         <div class="sticky top-2 space-y-4">
           <div class="flex flex-col">
             <input
@@ -61,8 +61,7 @@
             </button>
           </div>
           <div>
-            <div
-              class="max-w-sm bg-white shadow-md rounded-md overflow-hidden w-full">
+            <div class="bg-white shadow-md rounded-md overflow-hidden w-full">
               <div class="bg-gray-800 text-white text-center py-2">
                 <h2 class="text-md font-medium">Top Posts</h2>
               </div>
