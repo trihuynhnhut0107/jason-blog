@@ -3,10 +3,9 @@
     <PostUnlockConfirmation
       v-model:popupActive="purchasingPopupActive"
       v-model:purchasingPost="confirmPurchasingPost"
-      v-model:currentPost="currentPost"
-    />
+      v-model:currentPost="currentPost" />
     <div v-if="fetchPending === 'pending'">Loading...</div>
-    <div v-else>
+    <div v-else class="h-full w-full">
       <div class="space-y-6">
         <h1 class="font-oswald">{{ postData.data.post.post_title }}</h1>
         <h5>
@@ -49,12 +48,15 @@ const dateOptions = {
 };
 
 // Fetch post data with `useFetch`
-const { data: postData, status: fetchPending, error: fetchError } = await useFetch(
-  `/api/posts`,
-  {
-    params: { slug }
-  }
-);
+const {
+  data: postData,
+  status: fetchPending,
+  error: fetchError,
+} = await useFetch(`/api/posts`, {
+  params: { slug },
+});
+
+console.log(postData);
 
 const purchasingPopupActive = ref(false);
 const confirmPurchasingPost = ref(false);
@@ -64,7 +66,6 @@ function showPurchasingDialog(postProductID: number) {
   currentPost.value = postProductID;
   purchasingPopupActive.value = true;
 }
-
 </script>
 
 <style scoped>

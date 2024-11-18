@@ -5,7 +5,9 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const perPage = query.per_page || 2;
   const page = query.page || 1;
-  const search = query.search || ''
+
+  const categories = query.category;
+
   const cookies = event.node.req.headers.cookie;
   try {
     // Make the request to the WordPress API using Axios
@@ -15,7 +17,8 @@ export default defineEventHandler(async (event) => {
         params: {
           per_page: perPage,
           page: page,
-          search: search
+          categories: categories,
+
         },
         withCredentials: true,
         headers: {
