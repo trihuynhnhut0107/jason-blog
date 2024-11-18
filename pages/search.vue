@@ -20,7 +20,7 @@
           </button>
           <h5 class="text-start">
             {{
-              new Date(item.post.post_date).toLocaleDateString("en-US", options)
+              new Date(item.post.post_date).toLocaleDateString("en-US")
             }}
           </h5>
           <button
@@ -86,6 +86,7 @@ watch(
 );
 fetchPostByPage(searchQuery.value, 1);
 
+
 const totalPages = ref(0);
 async function fetchPostByPage(searchTerm: string, pageNumber: number) {
   if (searchTerm === "") {
@@ -96,15 +97,15 @@ async function fetchPostByPage(searchTerm: string, pageNumber: number) {
   try {
     loading.value = true;
     const data = await $fetch("api/get_post_list", {
-      credentials: "include",
+      headers: useRequestHeaders(),
       params: {
         per_page: 2,
         page: pageNumber,
         search: searchTerm,
       },
     });
-    totalPages.value = data.total_pages;
-    searchResults.value = data;
+    totalPages.value = data.data.total_pages;
+    searchResults.value = data.data;
   } catch (error) {
     console.error(error);
   } finally {

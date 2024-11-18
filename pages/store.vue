@@ -2,7 +2,7 @@
   <div class="text-4xl font-oswald">Store</div>
   <div class="flex flex-row justify-center items-center h-full w-full">
     <div class="flex flex-col p-2 h-full w-full">
-      <button
+      <div
         @mouseleave="itemQuantity = 1"
         class="relative w-full h-full border rounded-md flex flex-col items-center justify-center">
         <h1
@@ -36,7 +36,7 @@
             </button>
           </div>
         </div>
-      </button>
+      </div>
       <div class="flex flex-col items-center justify-center">
         <p>Token</p>
         <p>Price: {{ tokenPrice }} VNĐ</p>
@@ -49,8 +49,6 @@
 definePageMeta({
   layout: "store",
 });
-
-const itemSellingCount = ref(5);
 const itemQuantity = ref(1);
 
 const tokenPrice = ref(1000);

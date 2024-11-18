@@ -7,7 +7,7 @@
           ><h1 class="font-logo text-4xl">Jason's Blog</h1></NuxtLink
         >
         <div class="flex flex-row space-x-4 font-roboto">
-          <div>Token: {{ token }}</div>
+          <div>Token: {{ data.token }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
               Log out
@@ -25,20 +25,13 @@
 </template>
 
 <script setup lang="ts">
-const token = ref(0)
-const fetchToken = async () => {
-  try {
-    const reponse = await $fetch("api/tokens/token", {
-      credentials: "include",
-    });
-    return reponse.token
-  } catch (e) {
-    console.log(e);
-  }
-};
-onMounted(async () => {
-  token.value = await fetchToken();
-});
+import { useRequestHeaders, useFetch } from '#imports';
+
+const { data } = await useFetch('/api/tokens/token', {
+  headers: useRequestHeaders(),
+  immediate: true
+})
+
 function logout() {
   navigateTo("/login");
 }
