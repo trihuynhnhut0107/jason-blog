@@ -1,10 +1,12 @@
 import axios from "axios";
+import { useFetch } from "nuxt/app";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const query = getQuery(event);
   const slug = query.slug;
   const cookies = event.node.req.headers.cookie;
+
   try {
     // Make the request to the WordPress API using Axios
     const response = await axios.get(

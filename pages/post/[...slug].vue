@@ -39,6 +39,7 @@ import { useRoute, useFetch } from "nuxt/app";
 
 const route = useRoute();
 const slug = route.params.slug || "home";
+const router = useRouter();
 
 const dateOptions = {
   weekday: "long",
@@ -56,8 +57,6 @@ const {
   params: { slug },
 });
 
-console.log(postData);
-
 const purchasingPopupActive = ref(false);
 const confirmPurchasingPost = ref(false);
 const currentPost = ref(-1);
@@ -66,6 +65,46 @@ function showPurchasingDialog(postProductID: number) {
   currentPost.value = postProductID;
   purchasingPopupActive.value = true;
 }
+
+const readingTime = ref(0); // Track the time spent on the page
+let timerId: number | undefined; // To store the interval ID
+
+// Start the timer
+function startReadingTimer() {
+  // Only start a new timer if there is no existing timer
+  if (!timerId) {
+    timerId = setInterval(() => {
+      readingTime.value++;
+      console.log(`Reading time: ${readingTime.value} seconds`);
+    }, 1000);
+    console.log(timerId);
+  }
+}
+
+// Stop the timer
+function stopReadingTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = undefined;
+    console.log("Timer stopped:::", readingTime.value);
+  }
+}
+
+const nuxtApp = useNuxtApp();
+// nuxtApp.hook("page:loading:end", () => {
+//   if (route.path.startsWith("/post/")) {
+//     startReadingTimer();
+//   }
+// });
+
+onMounted(() => {
+  startReadingTimer();
+});
+
+onBeforeRouteLeave(() => {
+  console.log("Leaving");
+  stopReadingTimer();
+});
 </script>
 
 <style scoped>
