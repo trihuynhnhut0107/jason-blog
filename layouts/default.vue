@@ -2,17 +2,14 @@
   <div class="h-screen w-screen max-w-screen bg-white">
     <div class="w-full bg-black text-white">
       <div
-
         class="container mx-auto w-11/12 px-2 py-4 lg:p-4 lg:w-3/4 flex flex-row justify-between items-center">
-
         <NuxtLink to="/"
           ><h1 class="font-logo text-xl md:text-2xl lg:text-4xl">
             Jason's Blog
           </h1></NuxtLink
         >
         <div
-          class="flex flex-row space-x-1 md:space-x-2 lg:space-x-4 font-roboto text-xs md:text-sm lg:text-base"
-        >
+          class="flex flex-row space-x-1 md:space-x-2 lg:space-x-4 font-roboto text-xs md:text-sm lg:text-base">
           <div>
             <NuxtLink to="/store" class="hover:text-red-text duration-100"
               >Store</NuxtLink
@@ -30,20 +27,17 @@
     <div class="flex flex-row w-full container mx-auto">
       <div class="w-1/4 p-6 space-y-4 hidden md:block"></div>
       <div
-        class="w-full h-full p-6 font-roboto flex flex-col items-center justify-center space-y-6"
-      >
+        class="w-full h-full p-6 font-roboto flex flex-col items-center justify-center space-y-6">
         <div class="flex flex-col top-2 md:hidden w-1/2">
           <input
             type="text"
             v-model="search"
             placeholder="Search title"
             class="border-b-2 h-12 p-2"
-            @keyup.enter="navigateToSearch"
-          />
+            @keyup.enter="navigateToSearch" />
           <button
             class="border-2 px-2 py-1 bg-black text-white rounded-md my-2"
-            @click="navigateToSearch"
-          >
+            @click="navigateToSearch">
             Search
           </button>
         </div>
@@ -82,7 +76,7 @@
                   </thead>
                   <tbody>
                     <tr
-                      v-for="(post, index) in topViewedPosts"
+                      v-for="(post, index) in topPosts.data"
                       :key="index"
                       class="border-t">
                       <td class="py-1">{{ index + 1 }}</td>
@@ -99,7 +93,6 @@
                   </tbody>
                 </table>
               </div>
-
             </div>
           </div>
         </div>
@@ -114,16 +107,16 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const search = ref("");
 const token = ref(0);
-const fullPath = computed(() => route.fullPath)
+const fullPath = computed(() => route.fullPath);
 const { data } = await useFetch("/api/tokens/token", {
   headers: useRequestHeaders(),
 });
 
 const { data: topPosts } = await useFetch("/api/get_top_views_posts", {
   watch: [fullPath],
-  immediate: true
+  immediate: true,
 });
-
+console.log(topPosts.value);
 
 function navigateToSearch() {
   if (search.value === "") {
@@ -136,7 +129,6 @@ function navigateToSearch() {
       search: search.value,
     },
   });
-
 }
 
 function navigateToPost(slug) {

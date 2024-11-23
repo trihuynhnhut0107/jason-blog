@@ -46,21 +46,20 @@ const dateOptions = {
   month: "long",
   day: "numeric",
 };
+const purchasingPopupActive = ref(false);
+const confirmPurchasingPost = ref(false);
+const currentPost = ref(-1);
 
 // Fetch post data with `useFetch`
 const {
   data: postData,
   status: fetchPending,
   error: fetchError,
+  refresh: refreshPostData,
 } = await useFetch(`/api/posts`, {
   params: { slug },
+  watch: [purchasingPopupActive],
 });
-
-console.log(postData);
-
-const purchasingPopupActive = ref(false);
-const confirmPurchasingPost = ref(false);
-const currentPost = ref(-1);
 
 function showPurchasingDialog(postProductID: number) {
   currentPost.value = postProductID;
