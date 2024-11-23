@@ -59,11 +59,8 @@
         :key="item.id"
         class="flex flex-col py-4">
         <button
-          class="space-y-3"
-          @click="navigateToPost(item)"
-          :class="`${
-            item.has_access ? '' : 'pointer-events-none cursor-not-allowed'
-          } hover:text-red-text`">
+          class="space-y-3 hover:text-red-text"
+          @click="navigateToPost(item)">
           <h1 class="text-4xl text-start font-oswald py-4">
             {{ item.post.post_title }}
           </h1>
@@ -115,7 +112,6 @@ const { data: categoryInfo } = await useFetch(`/api/get_categories`, {
     orderby: "id",
   },
 });
-console.log(categoryInfo.value);
 
 function organizeCategories(categories) {
   const parentChildArray = [];
@@ -188,12 +184,9 @@ const changeCategory = (category) => {
       }
     });
   });
-  console.log(categoryList.value);
 };
 
 const categoryList = ref(organizeCategories(categoryInfo.value.data));
-
-console.log(categoryList.value);
 
 const { data, status, error, refresh } = await useFetch("/api/get_post_list", {
   params: {
