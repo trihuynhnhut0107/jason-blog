@@ -7,7 +7,6 @@ const { post } = defineProps({
 const getTruncatedContent = (content) => {
   return content.length > 200 ? content.slice(0, 200) + "..." : content;
 };
-console.log(post)
 </script>
 <template>
   <div class="w-full flex gap-4 border border-black min-w-[786px]">

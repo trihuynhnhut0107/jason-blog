@@ -41,7 +41,6 @@ async function unlockPost(postID: number) {
         },
       });
 
-      console.log(buyPostInfo);
     } catch (err) {
       const message = err?.data?.message || err?.message || "An unexpected error occurred";
       alert(message);

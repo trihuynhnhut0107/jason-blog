@@ -69,7 +69,6 @@ const {
   params: { slug },
   watch: [purchasingPopupActive],
 });
-console.log(postData.value.data.featured_image);
 function showPurchasingDialog(postProductID: number) {
   currentPost.value = postProductID;
   purchasingPopupActive.value = true;

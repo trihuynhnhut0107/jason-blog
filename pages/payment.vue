@@ -45,6 +45,5 @@ const { data, status, error, refresh } = await useFetch('https://api.vietqr.io/v
     template: "compact2",
   })
 });
-console.log(data)
 </script>
 <style></style>

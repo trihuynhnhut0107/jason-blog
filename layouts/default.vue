@@ -8,7 +8,12 @@
             Jason's Blog
           </h1></NuxtLink
         >
-        <div
+        <div v-if="data.data === false || data.token === false">
+          <NuxtLink to="/login" class="hover:text-red-text duration-100"
+              >Login</NuxtLink
+            >
+        </div>
+        <div v-else
           class="flex flex-row space-x-1 md:space-x-2 lg:space-x-4 font-roboto text-xs md:text-sm lg:text-base">
           <div>
             <NuxtLink to="/store" class="hover:text-red-text duration-100"
@@ -106,17 +111,16 @@ import { useRequestHeaders, useFetch } from "#imports";
 const config = useRuntimeConfig();
 const route = useRoute();
 const search = ref("");
-const token = ref(0);
+const token = ref(0)
 const fullPath = computed(() => route.fullPath);
 const { data } = await useFetch("/api/tokens/token", {
   headers: useRequestHeaders(),
 });
-
+console.log(data)
 const { data: topPosts } = await useFetch("/api/get_top_views_posts", {
   watch: [fullPath],
   immediate: true,
 });
-console.log(topPosts.value);
 
 function navigateToSearch() {
   if (search.value === "") {
