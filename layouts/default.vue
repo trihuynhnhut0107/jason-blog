@@ -8,7 +8,7 @@
             Jason's Blog
           </h1></NuxtLink
         >
-        <div v-if="!data || !data?.data || !data?.token === false">
+        <div v-if="!data">
           <NuxtLink to="/login" class="hover:text-red-text duration-100"
               >Login</NuxtLink
             >
