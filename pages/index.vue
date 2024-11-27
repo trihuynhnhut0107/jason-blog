@@ -51,7 +51,7 @@
     </div>
     <div
       v-if="
-        (data.data.posts && data.data.total_pages > 0) || status === 'pending'
+        (data?.data?.posts && data?.data?.total_pages > 0) || status === 'pending'
       "
       class="flex flex-col">
       <div
