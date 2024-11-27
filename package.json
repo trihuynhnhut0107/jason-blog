@@ -25,6 +25,7 @@
     "vue": "latest"
   },
   "devDependencies": {
+    "@nuxt/image": "^1.8.1",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@types/js-cookie": "^3.0.6",
     "autoprefixer": "^10.4.19",

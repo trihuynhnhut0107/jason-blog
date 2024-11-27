@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     "~/assets/css/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
-  modules: ["@nuxtjs/google-fonts"],
+  modules: ["@nuxtjs/google-fonts", '@nuxt/image'],
   googleFonts: {
     families: {
       // Specify the font families you want to import
@@ -31,4 +31,11 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  image: {
+    // No need to set `dir` for `public`
+    domains: [], // Specify external domains if needed (e.g., a CDN)
+    alias: {
+      assets: '~/assets/image', // Alias for assets folder
+    },
+  }
 });

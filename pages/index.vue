@@ -58,18 +58,11 @@
         v-for="item in data.data.posts"
         :key="item.id"
         class="flex flex-col py-4">
+        
         <button
           class="space-y-3 hover:text-red-text"
           @click="navigateToPost(item)">
-          <h1 class="text-4xl text-start font-oswald py-4">
-            {{ item.post.post_title }}
-          </h1>
-          <h5 class="text-start">
-            {{
-              new Date(item.post.post_date).toLocaleDateString("en-US", options)
-            }}
-          </h5>
-          <div v-html="item.post.post_content" class="line-clamp-3"></div>
+          <PostCard :post="item"/>
         </button>
       </div>
 

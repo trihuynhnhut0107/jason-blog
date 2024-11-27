@@ -3,9 +3,16 @@
     <PostUnlockConfirmation
       v-model:popupActive="purchasingPopupActive"
       v-model:purchasingPost="confirmPurchasingPost"
-      v-model:currentPost="currentPost" />
+      v-model:currentPost="currentPost"
+    />
     <div v-if="fetchPending === 'pending'">Loading...</div>
     <div v-else class="h-full w-full">
+      <div>
+        <NuxtImg
+          :src="postData.data.featured_image"
+          class="!w-full"
+        />
+      </div>
       <div class="space-y-6">
         <h1 class="font-oswald">{{ postData.data.post.post_title }}</h1>
         <h5>
@@ -21,10 +28,12 @@
         </div>
         <div
           v-if="!postData.data.has_access"
-          class="flex flex-row items-center justify-center">
+          class="flex flex-row items-center justify-center"
+        >
           <button
             @click="showPurchasingDialog(postData.data.post.ID)"
-            class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75">
+            class="text-black border-2 px-4 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75"
+          >
             Unlock?
           </button>
         </div>
@@ -60,7 +69,7 @@ const {
   params: { slug },
   watch: [purchasingPopupActive],
 });
-
+console.log(postData.value.data.featured_image);
 function showPurchasingDialog(postProductID: number) {
   currentPost.value = postProductID;
   purchasingPopupActive.value = true;
