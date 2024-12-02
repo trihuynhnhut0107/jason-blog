@@ -11,11 +11,19 @@ export default defineNuxtConfig({
       paymentInfo: process.env.PAYMENT_INFO,
     },
   },
+  fontawesome: {
+    icons: {
+      solid: ['star']
+    }
+  },
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
   css: [
     "~/assets/css/main.css",
     "@fortawesome/fontawesome-svg-core/styles.css",
   ],
-  modules: ["@nuxtjs/google-fonts", '@nuxt/image'],
+  modules: ["@nuxtjs/google-fonts", '@nuxt/image', "@vesp/nuxt-fontawesome", '@pinia/nuxt'],
   googleFonts: {
     families: {
       // Specify the font families you want to import

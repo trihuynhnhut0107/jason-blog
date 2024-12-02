@@ -3,7 +3,6 @@
   <div class="flex flex-row justify-center items-center h-full w-full">
     <div class="flex flex-col p-2 h-full w-full">
       <div
-        @mouseleave="itemQuantity = 1"
         class="relative w-full h-full border rounded-md flex flex-col items-center justify-center">
         <h1
           class="flex justify-center items-center font-logo text-5xl h-24 w-24 pointer-events-none cursor-not-allowed">
@@ -40,18 +39,21 @@
       <div class="flex flex-col items-center justify-center">
         <p>Token</p>
         <p>Price: {{ tokenPrice }} VNĐ</p>
+        <p>Total: {{ tokenPrice *  itemQuantity}} VNĐ</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { usePostToken } from '~/stores/usePostToken';
 definePageMeta({
   layout: "store",
 });
-const itemQuantity = ref(1);
+const {userBalance, postToken} = usePostToken()
+const itemQuantity = ref(postToken - userBalance > 0 ? postToken - userBalance : 0);
 
-const tokenPrice = ref(1000);
+const tokenPrice = ref(10000);
 
 function purchaseItem() {
   const tokenQuantityCookie = useCookie("tokenQuantity");

@@ -27,7 +27,7 @@ definePageMeta({
 
 const tokenAmount = Number(useCookie("tokenQuantity").value);
 
-const tokenPrice = 1000;
+const tokenPrice = 10000;
 const config = useRuntimeConfig();
 const { data, status, error, refresh } = await useFetch('https://api.vietqr.io/v2/generate', {
   method: "POST",

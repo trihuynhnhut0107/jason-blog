@@ -13,13 +13,11 @@
           @click="changeDropdownVisibility(category, !category.isOpen)"
           @mouseenter="changeDropdownVisibility(category, true)"
           @mouseleave="changeDropdownVisibility(category, false)">
-          <!-- Dropdown Button -->
           <button
             class="inline-flex justify-center w-full shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
             :class="`${category.isOpen ? 'border-b-2 border-black' : ''}`">
             {{ category.parent.name }}
           </button>
-          <!-- Dropdown Menu -->
           <div
             v-if="category.isOpen"
             class="absolute w-24 text-sm md:w-24 md:text-base text-start rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -86,8 +84,9 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import { useFetch } from "#app";
+import { usePostToken } from "~/stores/usePostToken";
 const config = useRuntimeConfig();
-
+const {setPostToken} = usePostToken();
 const options = ref({
   year: "numeric",
   month: "long",
@@ -192,6 +191,7 @@ const { data, status, error, refresh } = await useFetch("/api/get_post_list", {
 });
 
 function navigateToPost(post: object) {
+  setPostToken(post.product_price)
   navigateTo(`/${post.post.post_name}`);
 }
 

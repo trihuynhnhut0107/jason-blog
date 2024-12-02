@@ -8,7 +8,7 @@
             Jason's Blog
           </h1></NuxtLink
         >
-        <div v-if="!data || !data?.data || !data?.token">
+        <div v-if="!loginState">
           <NuxtLink to="/login" class="hover:text-red-text duration-100"
               >Login</NuxtLink
             >
@@ -20,7 +20,7 @@
               >Store</NuxtLink
             >
           </div>
-          <div>Token: {{ data.token }}</div>
+          <div>Token: {{ userBalance }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
               Log out
@@ -108,15 +108,15 @@
 
 <script setup lang="ts">
 import { useRequestHeaders, useFetch } from "#imports";
+import { usePostToken } from "~/stores/usePostToken";
+import { useLoginState } from "~/stores/useLoginState";
 const config = useRuntimeConfig();
 const route = useRoute();
 const search = ref("");
-const token = ref(0)
 const fullPath = computed(() => route.fullPath);
-const { data } = await useFetch("/api/tokens/token", {
-  headers: useRequestHeaders(),
-});
-console.log(data)
+const {userBalance, setUserBalance} = usePostToken();
+const {loginState} = useLoginState();
+
 const { data: topPosts } = await useFetch("/api/get_top_views_posts", {
   watch: [fullPath],
   immediate: true,

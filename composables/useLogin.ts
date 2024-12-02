@@ -1,9 +1,13 @@
+import { useLoginState } from '~/stores/useLoginState';
+import { usePostToken } from '~/stores/usePostToken';
 interface LoginData {
   username: string;
   password: string;
 }
 
 export async function useLogin(loginData: LoginData) {
+  const { setLoginState  } = useLoginState()
+  const { setUserBalance } = usePostToken()
   try {
     const data = await $fetch("/api/authentication/login", {
       method: "POST",
@@ -16,7 +20,9 @@ export async function useLogin(loginData: LoginData) {
         password: loginData.password,
       }),
     });
-  
+
+    setLoginState(true)
+    setUserBalance(data.token)
     navigateTo("/");
     return "Success";
   } catch (error) {
