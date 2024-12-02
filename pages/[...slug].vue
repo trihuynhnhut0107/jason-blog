@@ -33,7 +33,7 @@
         <h1 class="font-logo text-xl md:text-2xl lg:text-4xl">
             Jason's Blog
           </h1>
-          <p class="text-xl whitespace-pre-line text-[#555555]">{{`Continue reading your article \nwith only ${token} tokens`}}</p>
+          <p class="text-xl whitespace-pre-line text-[#555555]">{{`Continue reading your article \nwith only ${postToken} tokens`}}</p>
         <button
             @click="showPurchasingDialog(postData.data.post.ID)"
             class="bg-[#0274b6] text-white font-bold border-2 px-20 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75"
@@ -50,10 +50,10 @@
 import { ref } from "vue";
 import { useRoute, useFetch } from "nuxt/app";
 import { usePostToken } from "~/stores/usePostToken";
-
+const {postToken} = usePostToken()
 const route = useRoute();
 const slug = route.params.slug || "home";
-const token = 4;
+
 const dateOptions = {
   weekday: "long",
   year: "numeric",
