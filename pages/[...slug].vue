@@ -8,14 +8,14 @@
     <div v-if="fetchPending === 'pending'">Loading...</div>
     <div v-else class="h-full w-full">
       <div>
-        <NuxtImg
-          :src="postData.data.featured_image"
+        <img
+          :src="postData?.data?.featured_image || placeholderImage"
           class="!w-full"
         />
       </div>
       <div class="space-y-6">
         <h1 class="font-oswald">{{ postData.data.post.post_title }}</h1>
-        <h5>
+        <h5 class="text-[#555555]">
           {{
             new Date(postData.data.post.post_date).toLocaleDateString(
               "en-US",
@@ -33,7 +33,7 @@
         <h1 class="font-logo text-xl md:text-2xl lg:text-4xl">
             Jason's Blog
           </h1>
-          <p class="text-xl whitespace-pre-line text-[#555555]">{{`Continue reading your article \nwith only ${postToken} tokens`}}</p>
+          <p class="text-xl whitespace-pre-line text-[#555555]">{{`Continue reading your article \nwith only ${postToken || postData.data.product_price}`}}<font-awesome :icon="faStar" class="text-[#FFDF00]" /></p>
         <button
             @click="showPurchasingDialog(postData.data.post.ID)"
             class="bg-[#0274b6] text-white font-bold border-2 px-20 py-2 shadow-md rounded-md hover:bg-black hover:text-white hover:shadow-xl duration-75"
@@ -47,6 +47,8 @@
 </template>
 
 <script lang="ts" setup>
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import placeholderImage from "~/assets/image/elementor-placeholder-image.webp";
 import { ref } from "vue";
 import { useRoute, useFetch } from "nuxt/app";
 import { usePostToken } from "~/stores/usePostToken";
@@ -74,7 +76,6 @@ const {
   params: { slug },
   watch: [purchasingPopupActive],
 });
-
 function showPurchasingDialog(postProductID: number) {
   currentPost.value = postProductID;
   purchasingPopupActive.value = true;

@@ -10,7 +10,7 @@
           <div>Token: {{ data.token }}</div>
           <div>
             <button class="hover:text-red-text duration-100" @click="logout">
-              Log out
+              <img :src="Logout" class="w-[22px] h-[22px] mx-auto mt-2"/>
             </button>
           </div>
         </div>
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { useRequestHeaders, useFetch } from '#imports';
-
+import Logout from "~/assets/image/logout.png";
 const { data } = await useFetch('/api/tokens/token', {
   headers: useRequestHeaders(),
   immediate: true

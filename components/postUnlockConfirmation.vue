@@ -34,7 +34,7 @@
         class="flex flex-row items-center justify-center gap-2 mt-4 text-white"
       >
         <button
-          @click="redirectToStore"
+          @click="redirectToLogin"
           class="bg-black text-white border-2 px-4 py-2 shadow-md rounded-md duration-75"
         >
           Login
@@ -74,16 +74,18 @@
 
 <script lang="ts" setup>
 import { usePostToken } from '~/stores/usePostToken';
+import { useLoginState } from '~/stores/useLoginState';
+
 const router = useRouter();
 
 const popupActive = defineModel("popupActive");
 const purchasingPost = defineModel("purchasingPost");
 const currentPost = defineModel("currentPost");
-const step = ref(3);
+const step = ref(1);
 const {setPostToken} = usePostToken()
 async function unlockPost(postID: number) {
   purchasingPost.value = true;
-
+  
   if (postID !== -1) {
     try {
       const buyPostInfo = await $fetch("api/buypost", {
@@ -93,6 +95,9 @@ async function unlockPost(postID: number) {
           post_id: postID,
         },
       });
+      // if(buyPostInfo.data.purchased === true) {
+      //   await reloadNuxtApp()
+      // }
     } catch (err) {
       const message =
         err?.data?.message || err?.message || "An unexpected error occurred";
@@ -122,6 +127,8 @@ async function redirectToLogin() {
 async function redirectToStore() {
   await navigateTo("/store")
 }
+
+
 
 function cancelPurcharsing() {
   popupActive.value = false;

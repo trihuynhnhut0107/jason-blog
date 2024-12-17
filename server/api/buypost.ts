@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
       message: "Post ID is required",
     });
   }
-
+  
   try {
     const response = await axios.post(
       `${config.public.baseURL}/custom/v1/buypost`,
@@ -24,7 +24,6 @@ export default defineEventHandler(async (event) => {
         },
       }
     );
-
     return {
       success: true,
       data: response.data,
